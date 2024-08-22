@@ -10,5 +10,20 @@ using UnityEngine;
 
 public class GameManager : SingleTone<GameManager> // 싱글톤을 상속받음
 {
+    ScrollManager scrollManager;
 
+    private void Start()
+    {
+        scrollManager = GameObject.FindAnyObjectByType<ScrollManager>();
+
+        StartCoroutine(GameStart());
+    }
+
+    IEnumerator GameStart() // 게임시작 시 연출을 위해 딜레이를 줌.
+    {
+        yield return new WaitForSeconds(2f);
+        Debug.Log("게임 준비");
+        yield return new WaitForSeconds(2f);
+        scrollManager?.SetScrollSpeed(4f); // ?. : null 체크 연산자. if(n != null)과 같은 역할.
+    }
 }

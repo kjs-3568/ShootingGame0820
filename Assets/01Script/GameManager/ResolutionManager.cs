@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-// 해상도 관리자(여러 환경에서 플레이 할 수 있도록)
-// 플레이하는 디바이스의 해상도와, 제작할 때 기준이 된 해상도가 서로 다를 때.
-// 레터박스와 세터박스의 기법을 활용해서 제작한 비율이 유지가 되도록.
+
+// 해상도 관리자. 
+// 플레이하는 디바이스의 해상도와, 제작할때 기준이 된 해상도가 서로 다를때,
+// 레터박스와 세터박스의 기법을 활용해서 제작한 비율이 유지가 되도록. 
 public class ResolutionManager : SingleTone<ResolutionManager>
 {
     private Camera mainCam;
@@ -14,60 +15,76 @@ public class ResolutionManager : SingleTone<ResolutionManager>
 
     private Vector2 fixedAspectRatio = new Vector2(9, 16);
 
-    protected override void DoAwake() 
+    protected override void DoAwake()
     {
-        base.DoAwake(); // 부모클래스의 내용을 한번 실행 후 본인의 DoAwake를 호출
+        base.DoAwake(); // 부모클래스의 내용을 한번 실행 후에 본인의 doAwake를 호출.
+
+        // 초기설정 
         ApplySetting();
     }
 
     private void ApplySetting()
     {
-        if(mainCam == null)
+        if (mainCam == null)
         {
             mainCam = Camera.main;
         }
-        if(canvas == null)
+
+        if (canvas == null)
         {
             canvas = FindObjectOfType<Canvas>();
         }
-        if(canvasScalier == null)
-        {
+
+        if (canvasScalier == null)
             canvasScalier = FindObjectOfType<CanvasScaler>();
-        }
+
 
         if (mainCam != null)
         {
-            SetCameraAspectRatio(); // 해상도 고정
+            //해상도 고정
+            SetCameraAspectRatio();
         }
+
         if (canvas != null && canvasScalier != null)
         {
             ConfigureCanvas();
         }
     }
+
     private void SetCameraAspectRatio()
     {
+        // 카메라의 사각형 (rect) 정보를 가져옴
         Rect rt = mainCam.rect;
 
-        float screenAspect = (float)(Screen.width / Screen.height); // 플레이 화면 가로세로 비율구하기
-        float targetAspect = fixedAspectRatio.x / fixedAspectRatio.y; // 확정된 해상도
+        // 현재 화면의 종횡비 계산
+        float screenAspect = (float)Screen.width / Screen.height;
 
-        if(screenAspect >= targetAspect) // 넓이가 크다면
+        // 고정된 종횡비 계산
+        float targetAspect = fixedAspectRatio.x / fixedAspectRatio.y;
+
+        // 현재 화면 종횡비가 목표 종횡비보다 크거나 같으면
+        if (screenAspect >= targetAspect)
         {
+            // 화면의 너비를 조정하여 목표 종횡비를 맞춤
             float width = targetAspect / screenAspect;
             rt.width = width;
             rt.height = 1f;
-            rt.x = (1f - width) / 2f;
-            rt.y = 0f;
+            rt.x = (1f - width) / 2f; // 좌우 여백 조정
+            rt.y = 0f; // 상하 여백 없음
         }
         else
         {
-            float height =  screenAspect / targetAspect;
+            // 화면의 높이를 조정하여 목표 종횡비를 맞춤
+            float height = screenAspect / targetAspect;
             rt.width = 1f;
             rt.height = height;
-            rt.x = 0f;
-            rt.y = (1f - height) / 2f;
+            rt.x = 0f; // 좌우 여백 없음
+            rt.y = (1f - height) / 2f; // 상하 여백 조정
         }
+
+        // 카메라의 사각형 (rect) 설정 적용
         mainCam.rect = rt;
+
     }
 
     private void ConfigureCanvas()
