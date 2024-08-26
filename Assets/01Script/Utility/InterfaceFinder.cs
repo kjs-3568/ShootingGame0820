@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // 월드에 있는 특정 인터페이스를 모두 탐색해오기.
-// Interface: 순수 가상함수로만 이뤄진 추상클래스. 다중상속이 가능
 public class InterfaceFinder : MonoBehaviour
 {
     //FindObjectsOfType<> : FindObjectsByType<> 보다 옛날거. 기능이 좀 더 낙후됨. 그러나 유니티 버전에 따라 없을 수 잇음
