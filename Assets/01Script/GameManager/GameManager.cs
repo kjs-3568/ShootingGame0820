@@ -50,7 +50,9 @@ public class GameManager : SingleTone<GameManager> // ΩÃ±€≈Ê¿ª ªÛº”πﬁ¿Ω
     private void Update()
     {
         if (inputHandler != null)
+        {
             movementController.Move(inputHandler.GetInput());
+        }
     }
 
 

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerMove : MonoBehaviour, Imovement
 {
-    private bool isMoving = false; // 켜져있을때만 이동
+    private bool isMoving = true; // 켜져있을때만 이동
 
     [SerializeField]
     private float moveSpeed = 5f; // 플레이어의 이동 속도
