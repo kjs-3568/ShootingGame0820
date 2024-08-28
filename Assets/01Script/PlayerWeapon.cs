@@ -16,11 +16,6 @@ public class PlayerWeapon : MonoBehaviour, Iweapon
 
     private bool isFiring = false; // 무기가 발사 중인지 관리하는 변수
 
-    private void Update()
-    {
-        Fire();
-    }
-
     float startAngle;
     float angle;
     Quaternion fireRotation;

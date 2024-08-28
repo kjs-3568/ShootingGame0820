@@ -46,4 +46,13 @@ public class Projetile : MonoBehaviour, Imovement
     {
         Move(Vector2.zero); // Vector2.zero를 넣은 이유 : 특별히 의미없음
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject != owner && !collision.CompareTag(ownerTag))
+        {
+            // 추후에 할 일: 적에게 대미지 부여
+            Destroy(gameObject); // 추후에 오브젝트풀링으로 수정
+        }
+    }
 }

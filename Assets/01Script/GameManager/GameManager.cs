@@ -14,7 +14,7 @@ public class GameManager : SingleTone<GameManager> // 싱글톤을 상속받음
     ScrollManager scrollManager;
 
     private IinputHandler inputHandler;
-    private Imovement movementController;
+    private PlayerController pc;
 
     GameObject obj; // 메소드 전반에서 오브젝 찾을때.
 
@@ -32,12 +32,9 @@ public class GameManager : SingleTone<GameManager> // 싱글톤을 상속받음
     {
         inputHandler = GetComponent<InputKeybord>(); // 개발과정용 임시코드
 
-        obj = FindObjectsByType<PlayerMove>(FindObjectsSortMode.None)[0].gameObject; // 임시코드
-        if (obj != null)
-        {
-            if (!obj.TryGetComponent<Imovement>(out movementController))
-                Debug.Log("GameManager.cs - LoadSceneInit() - movementController 참조실패!");
-        }
+        pc = FindAnyObjectByType<PlayerController>();
+        if (pc == null)
+            Debug.Log("GameManager.cs - LoadSceneInit() - pc 참조실패!");
 
 //#if UNITY_EDITOR
 //        inputHandler = GetComponent<InputKeybord>();
@@ -51,7 +48,7 @@ public class GameManager : SingleTone<GameManager> // 싱글톤을 상속받음
     {
         if (inputHandler != null)
         {
-            movementController.Move(inputHandler.GetInput());
+            pc?.CustomUpdate(inputHandler.GetInput());
         }
     }
 
@@ -62,5 +59,7 @@ public class GameManager : SingleTone<GameManager> // 싱글톤을 상속받음
         Debug.Log("게임 준비");
         yield return new WaitForSeconds(2f);
         scrollManager?.SetScrollSpeed(4f); // ?. : null 체크 연산자. if(n != null)과 같은 역할.
+
+        pc?.StartGame();
     }
 }
