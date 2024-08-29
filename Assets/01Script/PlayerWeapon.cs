@@ -44,7 +44,7 @@ public class PlayerWeapon : MonoBehaviour, Iweapon
 
                 obj = Instantiate(projectilePrefab, firePoint.position, fireRotation);
                 projetileComp = obj?.GetComponent<Projetile>();
-                projetileComp?.InitProjectile(obj.transform.up, gameObject, 1f, 10f);
+                projetileComp?.InitProjectile(obj.transform.up, gameObject, 1, 10f);
             }
         }
     }

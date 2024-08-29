@@ -8,7 +8,7 @@ public class Projetile : MonoBehaviour, Imovement
 {
     [SerializeField]
     private float moveSpeed = 10f; // 이동속도
-    private float damage; // 데미지
+    private int damage; // 데미지
     private Vector2 moveDir; // 이동방향
     private GameObject owner; // 발사시켜준 주체
     private string ownerTag; // 주체의 태그(상대방 팀을 구분하기 위해서)
@@ -17,7 +17,7 @@ public class Projetile : MonoBehaviour, Imovement
 
 
     // 투사체의 기능을 수행하기 위해 정보를 세팅해주는 초기화함수
-    public void InitProjectile(Vector2 newDir, GameObject newOwner, float newDamage, float newSpeed)
+    public void InitProjectile(Vector2 newDir, GameObject newOwner, int newDamage, float newSpeed)
     {
         moveDir = newDir;
         damage = newDamage;
@@ -49,6 +49,26 @@ public class Projetile : MonoBehaviour, Imovement
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (collision.gameObject == owner)
+            return; // 함수종료
+        if (collision.CompareTag(ownerTag))
+            return;
+
+        // 화면 밖으로 벗어나서 부딪힌 경우, 게임스코어를 올리면 안됨
+        // 플레이어가 프로젝으로 Enemy를 맞췄을 경우, 게임스코어 증가
+        // Enermy가 플레이어를 맞췄을경우, 플레이어의 체력을 깎아주는 역할
+        if (collision.CompareTag("DestroyArea"))
+        {
+            Destroy(gameObject); //추후에 오브젝트풀링으로 수정
+        }
+        else
+        {
+            Idamaged idamaged = collision.GetComponent<Idamaged>();
+            idamaged?.TakeDamage(owner, damage);
+            Destroy(gameObject);
+        }
+
+
         if (collision.gameObject != owner && !collision.CompareTag(ownerTag))
         {
             // 추후에 할 일: 적에게 대미지 부여

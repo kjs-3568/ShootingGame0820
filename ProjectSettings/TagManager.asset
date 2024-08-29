@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Projectile
   - DestroyArea
+  - Enermy
   layers:
   - Default
   - TransparentFX

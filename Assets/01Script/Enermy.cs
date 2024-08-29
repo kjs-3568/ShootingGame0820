@@ -14,7 +14,7 @@ public class Enermy : MonoBehaviour, Imovement, Idamaged
     private bool isInit = false;
 
     // 현 체력의 퍼센트를 관리하기 위해.
-    private int curHp;
+    private int curHp = 3;
     private int maxHp;
 
     public bool isDead { get => curHp <= 0; } // => 람다식.( return ~~ )와 같음. <=는 그냥 비교
@@ -52,10 +52,30 @@ public class Enermy : MonoBehaviour, Imovement, Idamaged
     private void OnDamaged()
     {
         // 데미지를 받을 때 연출 등 처리해야하는 여러 로직을 모아서.
+
+        Debug.LogFormat("공격 받았다 남은 HP : {0}, maxHp :  {1}, moveSpeed : {2}", curHp, maxHp, moveSpeed);
     }
 
     private void OnDied()
     {
         // HP가 0일 때 연출 등 처리해야하는 여러 로직을 모아서.
+
+        Debug.Log("죽었다");
+        Destroy(gameObject);
+    }
+
+    Button bt;
+
+    private void Awake()
+    {
+        bt = FindAnyObjectByType<Button>();
+
+        bt.BP;
+    }
+
+    private void HandleBP(string color)
+    {
+        Color randomColor = new Color(Random.value, Random.value, Random.value);
+        gameObject.GetComponent<Renderer>().material.color = randomColor;
     }
 }
