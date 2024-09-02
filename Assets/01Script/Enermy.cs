@@ -19,6 +19,10 @@ public class Enermy : MonoBehaviour, Imovement, Idamaged
 
     public bool isDead { get => curHp <= 0; } // => 람다식.( return ~~ )와 같음. <=는 그냥 비교
 
+
+    public delegate void MonsterDiedEvent(Enermy enermyInfo); // 죽었다는 정보를 받는 델리게이트
+    public static event MonsterDiedEvent onMonsterDied;
+
     private void Update() // 추후 수정
     {
         Move(Vector2.down);
@@ -56,26 +60,11 @@ public class Enermy : MonoBehaviour, Imovement, Idamaged
         Debug.LogFormat("공격 받았다 남은 HP : {0}, maxHp :  {1}, moveSpeed : {2}", curHp, maxHp, moveSpeed);
     }
 
-    private void OnDied()
+    private void OnDied() // HP가 0일 때 연출 등 처리해야하는 여러 로직을 모아서.
     {
-        // HP가 0일 때 연출 등 처리해야하는 여러 로직을 모아서.
+        onMonsterDied?.Invoke(this); //onMonsterDied가 널이 아닐 때, 자기자신의 정보를 넘겨줌
 
         Debug.Log("죽었다");
         Destroy(gameObject);
-    }
-
-    Button bt;
-
-    private void Awake()
-    {
-        bt = FindAnyObjectByType<Button>();
-
-        bt.BP;
-    }
-
-    private void HandleBP(string color)
-    {
-        Color randomColor = new Color(Random.value, Random.value, Random.value);
-        gameObject.GetComponent<Renderer>().material.color = randomColor;
     }
 }
