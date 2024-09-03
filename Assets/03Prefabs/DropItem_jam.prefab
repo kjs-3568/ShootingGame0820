@@ -12,10 +12,10 @@ GameObject:
   - component: {fileID: 5581432065397492601}
   - component: {fileID: 1844357823}
   - component: {fileID: 1844357824}
-  - component: {fileID: 1844357822}
-  m_Layer: 0
+  - component: {fileID: -1746430999684201364}
+  m_Layer: 8
   m_Name: DropItem_jam
-  m_TagString: Untagged
+  m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -124,7 +124,7 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.19302493
---- !u!114 &1844357822
+--- !u!114 &-1746430999684201364
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

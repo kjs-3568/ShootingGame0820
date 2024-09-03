@@ -7,6 +7,7 @@ TagManager:
   - Projectile
   - DestroyArea
   - Enermy
+  - Item
   layers:
   - Default
   - TransparentFX
@@ -14,9 +15,9 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
-  - 
+  - Charactor
+  - Projectile
+  - Item
   - 
   - 
   - 
