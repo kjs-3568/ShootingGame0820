@@ -6,6 +6,6 @@ public class FlyItem_PowerUp : FlyItemBase
 {
     public override void ApplyEffect(GameObject target)
     {
-        throw new System.NotImplementedException();
+        ScoreMgr.PowerUp();
     }
 }

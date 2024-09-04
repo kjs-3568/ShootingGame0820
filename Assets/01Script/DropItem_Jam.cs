@@ -13,10 +13,9 @@ public class DropItem_Jam : MonoBehaviour,IPickuped
     CircleCollider2D col;
     Rigidbody2D rig;
 
-    private bool isSetTarget = true;
+    private bool isSetTarget = false;
     private GameObject target;
     private float pickupTimePer;
-
     private void Awake()
     {
         if(TryGetComponent<CircleCollider2D>(out col))

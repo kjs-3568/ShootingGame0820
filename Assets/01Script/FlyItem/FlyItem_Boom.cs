@@ -6,7 +6,7 @@ public class FlyItem_Boom : FlyItemBase
 {
     public override void ApplyEffect(GameObject target)
     {
-        throw new System.NotImplementedException();
+        ScoreMgr.IncreaseBombCount();
     }
 
 }

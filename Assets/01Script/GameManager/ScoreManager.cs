@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,7 +14,10 @@ public class ScoreManager : MonoBehaviour
     public static event ScoreChange OnChangeScore; // 게임점수변경 이벤트
     public static event ScoreChange OnChangeJamCount;
     public static event ScoreChange OnChangeHP;
-    public static event ScoreChange OnChangeBomb; // 매개인자가 같으면, 델리게이트 체인 여러개 만들기 가능
+    public static event ScoreChange OnChangeBomb;
+    public static event ScoreChange OnChangePower; // 매개인자가 같으면, 델리게이트 체인 여러개 만들기 가능
+
+    public static event Action<int> OnchangeHP2; // 델리게이트를 쓰지않고, 매개변수 이름없이 바로 액션으로 쓸 수 있음
 
 
     private int score; // 게임에서 플레이어가 습득한 점수. 적을 처치하거나 보석을 습득했을때마다.
@@ -82,5 +86,27 @@ public class ScoreManager : MonoBehaviour
 
         jamCount++;
         OnChangeJamCount?.Invoke(jamCount); // 스코어처럼 setter 만들 수도 있음
+    }
+
+    public void IncreaseHP() // 체력 1회복
+    {
+        curHP++;
+        if(curHP > maxHP)
+        {
+            curHP = maxHP;
+        }
+        OnChangeHP?.Invoke(curHP);
+    }
+
+    public void IncreaseBombCount()
+    {
+        bombCount++;
+        OnChangeBomb?.Invoke(bombCount);
+    }
+
+    public void PowerUp()
+    {
+        powerLevel++;
+        OnChangePower?.Invoke(powerLevel);
     }
 }
