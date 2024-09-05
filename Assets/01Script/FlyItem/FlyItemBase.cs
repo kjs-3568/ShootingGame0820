@@ -83,6 +83,7 @@ public abstract class FlyItemBase : MonoBehaviour, Imovement, IPickuped
     public void OnPickup(GameObject picker)
     {
         ApplyEffect(picker);
+        Destroy(gameObject);
     }
 
     // 스폰이 되고나서 4초에 한번씩 방향을 설정해주는 코루틴

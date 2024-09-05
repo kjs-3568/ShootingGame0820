@@ -13,13 +13,18 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     Image[] hearting;
 
+    Transform tr;
+
     TextMeshProUGUI ScoreText
     {
         get
         {
             if (scoreText == null)
             {
-                scoreText = canvasTrans.Find("ScoreText").GetComponent<TextMeshProUGUI>();
+                tr = MyUtility.FindChildRecursive(canvasTrans, "ScoreText");
+                if (tr != null)
+                    scoreText = tr.GetComponent<TextMeshProUGUI>();
+                //scoreText = canvasTrans.Find("ScoreText").GetComponent<TextMeshProUGUI>();
             }
             return scoreText;
         }
@@ -30,7 +35,9 @@ public class UIManager : MonoBehaviour
         {
             if (jamText == null)
             {
-                jamText = canvasTrans.Find("jamText").GetComponent<TextMeshProUGUI>();
+                tr = MyUtility.FindChildRecursive(canvasTrans, "JamText");
+                if (tr != null)
+                    jamText = tr.GetComponent<TextMeshProUGUI>();
             }
             return jamText;
         }
@@ -41,7 +48,9 @@ public class UIManager : MonoBehaviour
         {
             if (bombText == null)
             {
-                bombText = canvasTrans.Find("bombText").GetComponent<TextMeshProUGUI>();
+                tr = MyUtility.FindChildRecursive(canvasTrans, "BombText");
+                if (tr != null)
+                    bombText = tr.GetComponent<TextMeshProUGUI>();
             }
             return bombText;
         }
