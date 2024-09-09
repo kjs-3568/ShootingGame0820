@@ -15,6 +15,7 @@ public class GameManager : SingleTone<GameManager> // 싱글톤을 상속받음
 
     private IinputHandler inputHandler;
     private PlayerController pc;
+    //private MeteoManager meteoManager;
 
     GameObject obj; // 메소드 전반에서 오브젝 찾을때.
 
@@ -35,6 +36,10 @@ public class GameManager : SingleTone<GameManager> // 싱글톤을 상속받음
         pc = FindAnyObjectByType<PlayerController>();
         if (pc == null)
             Debug.Log("GameManager.cs - LoadSceneInit() - pc 참조실패!");
+
+        //meteoManager = FindAnyObjectByType<MeteoManager>();
+        //if (meteoManager == null)
+        //    Debug.Log("GameManager.cs - LoadSceneInit() - meteoManager 참조실패!");
 
 //#if UNITY_EDITOR
 //        inputHandler = GetComponent<InputKeybord>();

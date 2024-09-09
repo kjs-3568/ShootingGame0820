@@ -152,6 +152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8086eae1e0dbdf4bab769396d25b1f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  alertLinePref: {fileID: 3933425036875918571, guid: 770da899fb10aab408086c2e269c9e6a, type: 3}
 --- !u!4 &19640304
 Transform:
   m_ObjectHideFlags: 0
@@ -1711,7 +1712,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -176.9, y: -34}
+  m_AnchoredPosition: {x: -186, y: -34}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 1, y: 0}
 --- !u!114 &1336255160
@@ -2371,6 +2372,10 @@ MonoBehaviour:
   - {fileID: 8510491634620485803, guid: 83e51d76fdcd69e4385da68f104e8b25, type: 3}
   - {fileID: 2209465109152485660, guid: b980001c3f4616b479667db0dcb8f743, type: 3}
   - {fileID: 8234601997862427485, guid: c0ba2fe310ce1464088cfe033cac1954, type: 3}
+  spawnBossPrefabs:
+  - {fileID: 5642189647287983256, guid: aa7e75d7ab40790428951dc450a283a5, type: 3}
+  - {fileID: 1386455814285919951, guid: 635b26e2de4289747800616af90ea3df, type: 3}
+  - {fileID: 6238534910771865991, guid: ecfabf9b9dbaa6843b34afc9e9c587a6, type: 3}
 --- !u!1 &1931484248
 GameObject:
   m_ObjectHideFlags: 0
@@ -2528,7 +2533,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
   m_AnchoredPosition: {x: -30, y: 60}
-  m_SizeDelta: {x: 150, y: 50}
+  m_SizeDelta: {x: 170, y: 50}
   m_Pivot: {x: 1, y: 0}
 --- !u!114 &2083793607
 MonoBehaviour:

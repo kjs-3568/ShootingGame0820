@@ -24,8 +24,8 @@ public class AlertLine : MonoBehaviour
         // 2. 애니메이션 종료 후 메테오 스폰
         // 1. 애니메이션 재생
 
-        anims.SetTrigger("Spawn");
-        Invoke("SpawnMeteo", 21);
+        Anims.SetTrigger("Spawn");
+        Invoke("SpawnMeteo", 2f);
     }
 
     private void SpawnMeteo()

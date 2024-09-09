@@ -9,15 +9,47 @@ using UnityEngine;
 // +심화) 특수한 기능을 추가해서 UI의 새로운 값을 추가해보기
 public class MeteoManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField]
+    private GameObject alertLinePref;
+
+    private float nextSpawnTime;
+    private float spawnDelta = 3f;
+    private GameObject obj;
+    private AlertLine alertLine;
+    private Vector3 spawnpos = Vector3.zero;
+    private bool isSpawning = false;
+
+    private void Start()
     {
-        
+        StartSpawnMeteo();
+    }
+    public void StartSpawnMeteo()
+    {
+        StartCoroutine("SpawnMeteo");
+    }
+    public void StopSpawnMeteo()
+    {
+        StopCoroutine("SpawnMeteo");
+    }
+    IEnumerator SpawnMeteo()
+    {
+        yield return null;
+
+        while (true)
+        {
+            yield return new WaitForSeconds(spawnDelta);
+            spawnpos.x = Random.Range(-2.2f, 2.2f);
+
+            obj = Instantiate(alertLinePref, spawnpos, Quaternion.identity);
+            if (obj.TryGetComponent<AlertLine>(out alertLine))
+            {
+                alertLine.SpawnedLine();
+            }
+        }
+    }
+    public void SetSpawnDelta(float newSpawnDelta) // 나중에 스폰시간을 변경하고 싶으면 호출하면 됨.
+    {
+        spawnDelta = Mathf.Clamp(newSpawnDelta, 0.5f, 3f);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
