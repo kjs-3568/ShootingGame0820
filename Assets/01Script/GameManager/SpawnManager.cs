@@ -26,6 +26,8 @@ public class SpawnManager : MonoBehaviour
     }
 
     GameObject obj;
+
+    BossAI bossAI;
     IEnumerator SpawnEnermys()
     {
         yield return null;
@@ -49,16 +51,21 @@ public class SpawnManager : MonoBehaviour
 
         obj = Instantiate(spawnBossPrefabs[spawnLevel], new Vector3(0f, 8f, 0f), Quaternion.identity);
 
-        if(obj.TryGetComponent<BossAI>(out BossAI bossAI))
+        if(obj.TryGetComponent<BossAI>(out bossAI))
         {
-            Iweapon[] weapons = new Iweapon[] { new BossWeapons01(), new BossWeapons03() };
+            Iweapon[] weapons = new Iweapon[] { new BossWeapons01(), new BossWeapons02() };
+            foreach(var weapon in weapons)
+            {
+                weapon?.SetOwner(obj);
+            }
             bossAI.InitBoss("무지막지한 보스", 500, weapons);
+            bossAI.OnBossDied += NextLevel;
 
-            weapons = new Iweapon[] { new BossWeapons02(), new BossWeapons03() };
-            bossAI.InitBoss("엄청난 보스", 1000, weapons);
+            //weapons = new Iweapon[] { new BossWeapons02(), new BossWeapons03() };
+            //bossAI.InitBoss("엄청난 보스", 1000, weapons);
 
-            weapons = new Iweapon[] { new BossWeapons01(), new BossWeapons02() };
-            bossAI.InitBoss("굉장한 보스", 1000, weapons);
+            //weapons = new Iweapon[] { new BossWeapons01(), new BossWeapons02() };
+            //bossAI.InitBoss("굉장한 보스", 1000, weapons);
         }
 
         spawnLevel++;
@@ -68,5 +75,11 @@ public class SpawnManager : MonoBehaviour
         }
         spawnCount = 0;
         
+    }
+
+    public void NextLevel()
+    {
+        bossAI.OnBossDied -= NextLevel;
+        StartCoroutine(SpawnEnermys());
     }
 }

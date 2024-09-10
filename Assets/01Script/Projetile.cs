@@ -14,11 +14,13 @@ public class Projetile : MonoBehaviour, Imovement
     private string ownerTag; // 주체의 태그(상대방 팀을 구분하기 위해서)
 
     private bool isInIt = false; // 정보가 세팅되었을때만 동작하도록하는 트리거
+    private projectileType type; //  자신이 어떤 타입의 프로젝타일인지.
 
 
     // 투사체의 기능을 수행하기 위해 정보를 세팅해주는 초기화함수
-    public void InitProjectile(Vector2 newDir, GameObject newOwner, int newDamage, float newSpeed)
+    public void InitProjectile(projectileType type, Vector2 newDir, GameObject newOwner, int newDamage, float newSpeed)
     {
+        this.type = type;
         moveDir = newDir;
         damage = newDamage;
         moveSpeed = newSpeed;
@@ -59,7 +61,8 @@ public class Projetile : MonoBehaviour, Imovement
         // Enermy가 플레이어를 맞췄을경우, 플레이어의 체력을 깎아주는 역할
         if (collision.CompareTag("DestroyArea"))
         {
-            Destroy(gameObject); //추후에 오브젝트풀링으로 수정
+            //Destroy(gameObject); //추후에 오브젝트풀링으로 수정
+            ProjectileManager.Inst.ReturnProjectileToPool(this, type);
         }
         else
         {

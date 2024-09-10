@@ -81,17 +81,24 @@ public class UIManager : MonoBehaviour
 
     private void UpdateScoreText(int score)
     {
-        ScoreText.text = score.ToString();
+        if (score < 10)
+            ScoreText.text = "SCORE : 0000 000" + score.ToString();
+        else if (score < 100)
+            ScoreText.text = "SCORE : 0000 00" + score.ToString();
+        else if (score < 1000)
+            ScoreText.text = "SCORE : 0000 0" + score.ToString();
+        else if (score < 10000)
+            ScoreText.text = "SCORE : 0000 " + score.ToString();
     }
 
     private void UpdateBobmText(int score)
     {
-        BombText.text = "X : " + score.ToString();
+        BombText.text = "X " + score.ToString();
     }
 
     private void UpdateJamText(int score)
     {
-        JamText.text = "X : " + score.ToString();
+        JamText.text = "X " + score.ToString();
     }
 
 }

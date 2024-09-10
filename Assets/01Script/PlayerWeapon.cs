@@ -9,7 +9,7 @@ public class PlayerWeapon : MonoBehaviour, Iweapon
     [SerializeField]
     private Transform firePoint; // 투사체 발사위치
 
-    private int numpOfProjectiles = 1; // 투사체 발사되는 갯수
+    private int numpOfProjectiles = 5; // 투사체 발사되는 갯수
     private float spreadAngled = 5; // 투사체가 여러발 발사 될 때, 사이 간격
     private float fireRate = 0.3f; // 투사체 발사간격
     private float nextFireTime = 0f;
@@ -41,10 +41,13 @@ public class PlayerWeapon : MonoBehaviour, Iweapon
                 angle = startAngle + spreadAngled * i;
 
                 fireRotation = firePoint.rotation * Quaternion.Euler(0f, 0f, angle); // 투사체 발사방향
+                Vector2 fireDir = fireRotation * Vector2.up;
 
-                obj = Instantiate(projectilePrefab, firePoint.position, fireRotation);
-                projetileComp = obj?.GetComponent<Projetile>();
-                projetileComp?.InitProjectile(obj.transform.up, gameObject, 1, 10f);
+                //obj = Instantiate(projectilePrefab, firePoint.position, fireRotation);
+                //projetileComp = obj?.GetComponent<Projetile>();
+                //projetileComp?.InitProjectile(obj.transform.up, gameObject, 1, 10f);
+                ProjectileManager.Inst.FireProjectile(projectileType.plyer01, firePoint.position, fireDir,
+                                                      gameObject, 1, 10f);
             }
         }
     }
@@ -52,5 +55,10 @@ public class PlayerWeapon : MonoBehaviour, Iweapon
     public void SetEnabled(bool enabled)
     {
         isFiring = enabled;
+    }
+
+    public void SetOwner(GameObject newOwner)
+    {
+        
     }
 }
