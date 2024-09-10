@@ -67,9 +67,23 @@ public class BossWeapons02 : BossWeaponBase, Iweapon
 
 public class BossWeapons03 : BossWeaponBase, Iweapon
 {
+    private float angleChangeValue = 2f;
+    private float maxAngle = 15f;
+    private float curAngle = 0f;
     public void Fire()
     {
         // 3번 무기의 공격방식 구현 (숙제)
+        
+        while (true)
+        {
+            Vector3 firePos = owner.transform.position;
+            Vector2 fireDir = Quaternion.Euler(0f, 0f, curAngle) * Vector2.down;
+            ProjectileManager.Inst.FireProjectile(projectileType.Boss03, firePos, fireDir, owner, 1, 6f);
+
+            curAngle += angleChangeValue;
+            if (curAngle > maxAngle || curAngle < (maxAngle * -1))
+                angleChangeValue *= -1;
+        }
     }
 
     public void SetEnabled(bool enabled)

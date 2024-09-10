@@ -39,8 +39,6 @@ public class BossAI : MonoBehaviour, Imovement, Idamaged
         curHP = maxHP = newHP;
         // ui º¯°æ
         weapons = newWeapons;
-
-        weapons = newWeapons;
         SetEnabled(true);
 
     }
