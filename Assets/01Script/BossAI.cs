@@ -35,12 +35,13 @@ public class BossAI : MonoBehaviour, Imovement, Idamaged
 
     public void InitBoss(string name, int newHP, Iweapon[] newWeapons)
     {
+        // ui 변경
         bossName = name;
         curHP = maxHP = newHP;
-        // ui 변경
+        
         weapons = newWeapons;
         SetEnabled(true);
-
+        ChangeState(BossState.BS_MoveToAppear);
     }
 
     public void ChangeState(BossState newState) // 상태를 변경해주는 메소드
@@ -63,7 +64,7 @@ public class BossAI : MonoBehaviour, Imovement, Idamaged
         {
             if(transform.position.y <= bossAppearPointY) // 도달을 했다면
             {
-                moveDir = Vector2.zero;
+                moveDir = Vector2.zero; // 이동을 멈춘다.
                 ChangeState(BossState.BS_Phase01);
             }
             // 도달하지 못했다면,
@@ -75,23 +76,19 @@ public class BossAI : MonoBehaviour, Imovement, Idamaged
     {
         // 현 무기 활성화
         curWeapon = weapons[0];
-
-        while(true)
-        {
-            curWeapon = weapons[0];
-            curWeapon.SetEnabled(true);
+        curWeapon.SetEnabled(true);
             while(true)
             {
                 curWeapon.Fire();
                 yield return new WaitForSeconds(0.4f);
             }
-        }
     }
 
     private IEnumerator BS_Phase02()
     {
         // 무기교체 (2번째 패턴에 맞춰 변경)
         curWeapon = weapons[1];
+
         // 좌우로 번갈아가며 이동함
         moveDir = Vector2.right;
 
@@ -99,7 +96,7 @@ public class BossAI : MonoBehaviour, Imovement, Idamaged
         {
             curWeapon.Fire();
 
-            if(transform.position.x <= -2.5f || transform.position.z >= 2.5f)
+            if(transform.position.x <= -2.5f || transform.position.x >= 2.5f)
             {
                 moveDir *= -1f; // 움직임을 반전
             }
@@ -141,7 +138,7 @@ public class BossAI : MonoBehaviour, Imovement, Idamaged
     {
         // 데미지를 받을 때 연출 등 처리해야하는 여러 로직을 모아서.
 
-        Debug.LogFormat("공격 받았다 남은 HP : {0}, maxHp :  {1}, moveSpeed : {2}", curHP);
+        Debug.LogFormat("공격 받았다 남은 HP : {0}" , curHP);
 
         if(bossState == BossState.BS_Phase01 && (float)curHP/ maxHP < 0.5f) // HP가 50미만으로 떨어지게 되면
         {

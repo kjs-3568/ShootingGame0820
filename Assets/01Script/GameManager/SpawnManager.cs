@@ -26,13 +26,12 @@ public class SpawnManager : MonoBehaviour
     }
 
     GameObject obj;
-
     BossAI bossAI;
     IEnumerator SpawnEnermys()
     {
         yield return null;
 
-        while(spawnCount <= 9)
+        while(spawnCount <= 3)
         {
             for (int i = 0; i < spawnTrans.Length; i++)
             {
@@ -53,7 +52,7 @@ public class SpawnManager : MonoBehaviour
 
         if(obj.TryGetComponent<BossAI>(out bossAI))
         {
-            Iweapon[] weapons = new Iweapon[] { new BossWeapons01(), new BossWeapons02() };
+            Iweapon[] weapons = new Iweapon[] { new BossWeapons03(), new BossWeapons01() };
             foreach(var weapon in weapons)
             {
                 weapon?.SetOwner(obj);
