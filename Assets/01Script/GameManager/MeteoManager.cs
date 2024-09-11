@@ -19,10 +19,6 @@ public class MeteoManager : MonoBehaviour
     private Vector3 spawnpos = Vector3.zero;
     private bool isSpawning = false;
 
-    private void Start()
-    {
-        StartSpawnMeteo();
-    }
     public void StartSpawnMeteo()
     {
         StartCoroutine("SpawnMeteo");

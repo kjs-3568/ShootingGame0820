@@ -70,6 +70,7 @@ public class UIManager : MonoBehaviour
         ScoreManager.OnChangeScore += UpdateScoreText;
         ScoreManager.OnChangeBomb += UpdateBobmText;
         ScoreManager.OnChangeJamCount += UpdateJamText;
+        ScoreManager.OnChangeHP += UpdatePlayerHP;
     }
 
     private void OnDisable()
@@ -77,18 +78,28 @@ public class UIManager : MonoBehaviour
         ScoreManager.OnChangeScore -= UpdateScoreText;
         ScoreManager.OnChangeBomb -= UpdateBobmText;
         ScoreManager.OnChangeJamCount -= UpdateJamText;
+        ScoreManager.OnChangeHP -= UpdatePlayerHP;
     }
 
     private void UpdateScoreText(int score)
     {
         if (score < 10)
-            ScoreText.text = "SCORE : 0000 000" + score.ToString();
+            ScoreText.text = "SCORE : 0000000" + score.ToString();
         else if (score < 100)
-            ScoreText.text = "SCORE : 0000 00" + score.ToString();
+            ScoreText.text = "SCORE : 000000" + score.ToString();
         else if (score < 1000)
-            ScoreText.text = "SCORE : 0000 0" + score.ToString();
+            ScoreText.text = "SCORE : 00000" + score.ToString();
         else if (score < 10000)
-            ScoreText.text = "SCORE : 0000 " + score.ToString();
+            ScoreText.text = "SCORE : 0000" + score.ToString();
+        else if (score < 100000)
+            ScoreText.text = "SCORE : 000" + score.ToString();
+        else if (score < 1000000)
+            ScoreText.text = "SCORE : 00" + score.ToString();
+        else if (score < 10000000)
+            ScoreText.text = "SCORE : 0" + score.ToString();
+        else
+            ScoreText.text = "SCORE : " + score.ToString();
+
     }
 
     private void UpdateBobmText(int score)
@@ -101,6 +112,16 @@ public class UIManager : MonoBehaviour
         JamText.text = "X " + score.ToString();
     }
 
+    private void UpdatePlayerHP(int score)
+    {
+        for(int i = 0; i < 5; i++)
+        {
+            if(i < score)
+                hearting[i].enabled = true;
+            else
+                hearting[i].enabled = false;
+        }
+    }
 }
 
 

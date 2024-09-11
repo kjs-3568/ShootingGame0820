@@ -28,4 +28,10 @@ public class PlayerController : MonoBehaviour
         currentWeapon?.SetEnabled(true);
         movement?.SetEnabled(true);
     }
+
+    public void OverGame()
+    {
+        currentWeapon?.SetEnabled(false);
+        movement?.SetEnabled(false);
+    }
 }

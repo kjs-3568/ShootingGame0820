@@ -76,34 +76,17 @@ public class BossWeapons03 : BossWeaponBase, Iweapon
     {
         // 3번 무기의 공격방식 구현 (숙제)
 
-        //while (true)
-        //{
-        //    Vector3 firePos = owner.transform.position;
-        //    Vector2 fireDir = Quaternion.Euler(0f, 0f, curAngle) * Vector2.down;
-        //    ProjectileManager.Inst.FireProjectile(projectileType.Boss03, firePos, fireDir, owner, 1, 6f);
-
-        //    curAngle += angleChangeValue;
-        //    if (curAngle > maxAngle || curAngle < (maxAngle * -1))
-        //        angleChangeValue *= -1;
-        //}
-
         Vector3 firePos = owner.transform.position;
 
-
-        for (int i = 0; i < numOfProj; i++)
+        for (int i = 0; i < numOfProj; i++) // 탄환 생성 속도 너무 느려서 난이도를 위해 부채꼴로 발사...(생성속도 조절하게 되면 없애기)
         {
-            // 각 탄환의 각도를 부채꼴로 분배
-            float angle = centerAngle + (maxAngle * (i - (numOfProj - 1) / 2f));
+            float angle = centerAngle + (maxAngle * (i - (numOfProj - 1) / 2f)); 
 
-
-            // 각도에 따른 발사 방향 계산
             Vector2 fireDir = Quaternion.Euler(0f, 0f, centerAngle) * Vector2.down;
             ProjectileManager.Inst.FireProjectile(projectileType.Boss03, firePos, fireDir, owner, 1, 6f);
 
-            // 중심각을 변경하여 다음 발사 시 탄환의 패턴이 변화
             centerAngle += angleChangeValue;
 
-            // 중심각이 일정 범위를 넘으면 반대 방향으로 각도 변경
             if (centerAngle > maxAngle || centerAngle < -maxAngle)
             {
                 angleChangeValue *= -1;

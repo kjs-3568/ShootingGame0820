@@ -19,6 +19,8 @@ public class ScoreManager : MonoBehaviour
 
     public static event Action<int> OnchangeHP2; // 델리게이트를 쓰지않고, 매개변수 이름없이 바로 액션으로 쓸 수 있음
 
+    public event Action OnDiedPlayer;
+
 
     private int score; // 게임에서 플레이어가 습득한 점수. 적을 처치하거나 보석을 습득했을때마다.
     private int curHP; // 플레이어 현 HP
@@ -65,12 +67,24 @@ public class ScoreManager : MonoBehaviour
     {
         Enermy.onMonsterDied += HandleMonsterDied;
         DropItem_Jam.OnPickupJam += HandleJamPickup;
+        PlayerHitBox.OnPlayerHpUncreased += PlayerHPChange;
     }
 
     private void OnDisable()
     {
         Enermy.onMonsterDied -= HandleMonsterDied;
         DropItem_Jam.OnPickupJam -= HandleJamPickup;
+        PlayerHitBox.OnPlayerHpUncreased -= PlayerHPChange;
+    }
+
+    public void PlayerHPChange(bool isIncreased)
+    {
+        if (isIncreased)
+        {
+            IncreaseHP();
+        }
+        else
+            DecreaseHP();
     }
 
     private void HandleMonsterDied(Enermy enermyInfo)
@@ -96,6 +110,16 @@ public class ScoreManager : MonoBehaviour
             curHP = maxHP;
         }
         OnChangeHP?.Invoke(curHP);
+    }
+    public void DecreaseHP() // 체력 감소
+    {
+        curHP--;
+        OnChangeHP?.Invoke(curHP);
+        if (curHP < 1)
+        {
+            curHP = 0;
+            OnDiedPlayer?.Invoke();
+        }
     }
 
     public void IncreaseBombCount()

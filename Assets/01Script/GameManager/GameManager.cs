@@ -15,7 +15,9 @@ public class GameManager : SingleTone<GameManager> // 싱글톤을 상속받음
 
     private IinputHandler inputHandler;
     private PlayerController pc;
-    //private MeteoManager meteoManager;
+    private MeteoManager meteoManager;
+    private SpawnManager spawnManager;
+    private ScoreManager scoreManager;
 
     GameObject obj; // 메소드 전반에서 오브젝 찾을때.
 
@@ -37,15 +39,17 @@ public class GameManager : SingleTone<GameManager> // 싱글톤을 상속받음
         if (pc == null)
             Debug.Log("GameManager.cs - LoadSceneInit() - pc 참조실패!");
 
-        //meteoManager = FindAnyObjectByType<MeteoManager>();
-        //if (meteoManager == null)
-        //    Debug.Log("GameManager.cs - LoadSceneInit() - meteoManager 참조실패!");
+        scrollManager = FindAnyObjectByType<ScrollManager>();
+        spawnManager = FindAnyObjectByType<SpawnManager>();
+        scoreManager = FindAnyObjectByType<ScoreManager>();
+        meteoManager = FindAnyObjectByType<MeteoManager>();
 
-//#if UNITY_EDITOR
-//        inputHandler = GetComponent<InputKeybord>();
-//#elif UNITY_ANDROID
-//        inputHandler = GetComponent<InputKeybord>();
-//#endif
+
+        //#if UNITY_EDITOR
+        //        inputHandler = GetComponent<InputKeybord>();
+        //#elif UNITY_ANDROID
+        //        inputHandler = GetComponent<InputKeybord>();
+        //#endif
 
     }
 
@@ -60,11 +64,40 @@ public class GameManager : SingleTone<GameManager> // 싱글톤을 상속받음
 
     IEnumerator GameStart() // 게임시작 시 연출을 위해 딜레이를 줌.
     {
+        yield return null;
+        Debug.Log("게임 데이터 초기화");
+        scoreManager?.InitScoreSet();
+        scoreManager.OnDiedPlayer += PlayerDiedProcess;
         yield return new WaitForSeconds(2f);
-        Debug.Log("게임 준비");
+        pc?.StartGame(); // 게임시작하면 공격을 시작하고, 유저의 입력 받아옴
+        Debug.Log("플레이어 컨트롤 On");
+        yield return new WaitForSeconds(1f);
+        scrollManager?.SetScrollSpeed(4f);
+        Debug.Log("배경 스크롤 시작");
         yield return new WaitForSeconds(2f);
-        scrollManager?.SetScrollSpeed(4f); // ?. : null 체크 연산자. if(n != null)과 같은 역할.
+        spawnManager?.InitSpawnManager();
+        Debug.Log("몬스터 스폰 시작");
+        yield return new WaitForSeconds(5f);
+        meteoManager.StartSpawnMeteo();
+        Debug.Log("메테오 스폰 시작");
+    }
 
-        pc?.StartGame();
+    private void PlayerDiedProcess()
+    {
+        StopAllCoroutines();
+        StartCoroutine(GameOver());
+    }
+
+    IEnumerator GameOver()
+    {
+        yield return null;
+        scoreManager.OnDiedPlayer -= PlayerDiedProcess;
+        pc?.OverGame();
+        scrollManager.SetScrollSpeed(0f);
+        spawnManager?.StopSpawnManager();
+        meteoManager?.StopSpawnMeteo();
+
+        yield return new WaitForSeconds(3f);
+        // 3초 기다리고 게임오버 팝업을 열 수 있음(추가 로직 필요)
     }
 }
